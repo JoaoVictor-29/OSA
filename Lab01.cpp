@@ -14,8 +14,8 @@ struct Registro{
 void gravarAlunos(const vector<Registro>& alunos, ofstream& arquivoBin){
     
     if(arquivoBin.is_open()){
-        for(int i = 0; i < 5; i++){
-            arquivoBin.write(reinterpret_cast<char*>(*Registro), sizeof Registro);
+        for(const Registro& registro : alunos){
+            arquivoBin.write(reinterpret_cast<const char*>(&registro), sizeof registro);
         }
     }else{
         cout << "Erro ao abrir o arquivo" << endl;
@@ -23,7 +23,32 @@ void gravarAlunos(const vector<Registro>& alunos, ofstream& arquivoBin){
 }
 
 void lerAlunos(vector<Registro>& alunos, ifstream& arquivoBin){
-    
+    if(arquivoBin.is_open()){
+        Registro aux;
+        while(arquivoBin.read(reinterpret_cast<char*>(&aux), sizeof(Registro))){
+            alunos.push_back(aux);
+        }
+    }else{
+        cout << "Erro ao abrir o arquivo" << endl;
+    }
+
+    cout << alunos.size() << endl;
+}
+
+void buscarPorMatricula(vector<Registro>& alunos){
+    int matric;
+    cout << "Digite a matricula do aluno que deseja buscar:" << endl;
+    cin >> matric;
+
+    for(int i = 0; i < alunos.size(); i++){
+        if(alunos[i].matricula == matric){
+            cout << "Matricula: " << alunos[i].matricula << endl;
+            cout << "Idade: " << alunos[i].idade << endl;
+            cout << "Media: " << alunos[i].media << endl;
+            return;
+        }
+    }
+    cout << "Matricula nao encontrada" << endl;
 }
 
 int main (){
@@ -41,7 +66,18 @@ int main (){
     }
 
     gravarAlunos(registro, arquivo);
-    arquivo.close;
+    arquivo.close();
+
+    ifstream arquivoLeitura("alunos.bin", ios::binary);
+    if(!arquivoLeitura.is_open()){
+        cout << "Erro ao ler o arquivo" << endl;
+    }
+
+    vector<Registro> regLidos;
+    lerAlunos(regLidos, arquivoLeitura);
+    arquivoLeitura.close();
+
+    buscarPorMatricula(registro);
 
     return 0;
 }

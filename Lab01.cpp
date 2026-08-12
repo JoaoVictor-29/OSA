@@ -1,25 +1,30 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
-Struct Registro{
+struct Registro{
     int matricula;
     int idade;
     float media;
 };
 
-void gravarAlunos(const vector<registro>&, ofstream& arquivoBin){
+void gravarAlunos(const vector<Registro>& alunos, ofstream& arquivoBin){
     
     if(arquivoBin.is_open()){
-        arquivo.write(reinterpret_cast<char*>(*Registro), sizeof Registro);
+        for(int i = 0; i < 5; i++){
+            arquivoBin.write(reinterpret_cast<char*>(*Registro), sizeof Registro);
+        }
     }else{
         cout << "Erro ao abrir o arquivo" << endl;
     }
 }
 
-
+void lerAlunos(vector<Registro>& alunos, ifstream& arquivoBin){
+    
+}
 
 int main (){
     vector<Registro> registro;

@@ -1,5 +1,6 @@
 #ifndef ALUNO_H
 #define ALUNO_H
+#include <string>
 
 using namespace std;
 
@@ -26,3 +27,5 @@ public:
     int getBytesUteis();
     void imprimir();
 };
+
+#endif

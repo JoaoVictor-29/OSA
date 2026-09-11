@@ -83,8 +83,28 @@ void Aluno::unpackFixo(const char* buffer){
     posicao += sizeof(int);
 
     char auxNome[40];
-    memcpy(auxNome, buffer + posicao, nome.length());
+    memcpy(auxNome, buffer + posicao, 40);
     nome = auxNome;
     posicao += 40;
 
+    memcpy(&idade, buffer + posicao, sizeof(int));
+    posicao += sizeof(int);
+
+    char auxCurso[35];
+    memcpy(auxCurso, buffer + posicao, 35);
+    curso = auxCurso;
+    posicao += 35;
+
+    char auxCidade[30];
+    memcpy(auxCidade, buffer + posicao, 30);
+    cidade = auxCidade;
+    posicao += 30;
+
+    char auxUf[3];
+    memcpy(auxUf, buffer + posicao, 3);
+    uf = auxUf;
+    posicao = 3;
+
+    memcpy(&cra, buffer + posicao, sizeof(float));
+    posicao += sizeof(float);
 }

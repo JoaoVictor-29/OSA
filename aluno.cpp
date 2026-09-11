@@ -77,5 +77,14 @@ void Aluno::unpackDelimitado(const string& buffer){
 }
 
 void Aluno::unpackFixo(const char* buffer){
-    
+    int posicao = 0;
+
+    memcpy(&matricula, buffer + posicao, sizeof(int));
+    posicao += sizeof(int);
+
+    char auxNome[40];
+    memcpy(auxNome, buffer + posicao, nome.length());
+    nome = auxNome;
+    posicao += 40;
+
 }

@@ -17,7 +17,7 @@ public:
 
     int packFixo(char* buffer);
     string packDelimitado();
-    int packIdicador(char* buffer);
+    int packIndicador(char* buffer);
     void unpackFixo(const char* buffer);
     void unpackDelimitado(const string& buffer);
     void unpackIndicador(const char* buffer);

@@ -3,10 +3,15 @@
 #include <vector>
 #include <string>
 #include "gerenciadorArquivo.h"
+#include "aluno.h"
 
 using namespace std;
 
-bool salvarFixo(string arq, vector<Aluno> al){
+vector<Aluno> gerenciadorArquivo::lerCSV(string caminho){
+    ifstream arquivo("aluno_1k.csv");
+}
+
+bool gerenciadorArquivo::salvarFixo(string arq, vector<Aluno> al){
     ofstream arqFixo(arq, ios::out | ios::binary);
     if(!arqFixo.is_open()){
         return false;
@@ -23,21 +28,21 @@ bool salvarFixo(string arq, vector<Aluno> al){
     return true;
 }
 
-bool salvarDelimitado(string arq, vector<Aluno> al){
-    ofstream arqDelimitado(arq);
+bool gerenciadorArquivo::salvarDelimitado(string arq, vector<Aluno> al){
+    ofstream arqDelimitado(arq, ios::out | ios::binary);
     if(!arqDelimitado.is_open()){
         return false;
     }
 
     for(Aluno& aluno : al){
        string alunoAtual = aluno.packDelimitado();
-       arqDelimitado << alunoAtual << "\n"; 
+       arqDelimitado << alunoAtual; 
     }
     arqDelimitado.close();
     return true;
 }
 
-bool salvarIndicador(string arq, vector<Aluno> al){
+bool gerenciadorArquivo::salvarIndicador(string arq, vector<Aluno> al){
     ofstream arqIndicador(arq, ios::out | ios::binary);
     if(!arqIndicador.is_open()){
         return false;
@@ -47,8 +52,7 @@ bool salvarIndicador(string arq, vector<Aluno> al){
     char buffer[tamanhoMaximo];
     for(Aluno& aluno : al){
         fill(buffer, buffer + tamanhoMaximo, '\0');
-        int tamanhoRegistro = aluno.packIdicador(buffer);
-        arqIndicador.write(reinterpret_cast<const char*>(&tamanhoRegistro), sizeof(int));
+        int tamanhoRegistro = aluno.packIndicador(buffer);
         arqIndicador.write(buffer, tamanhoRegistro);
     }
 

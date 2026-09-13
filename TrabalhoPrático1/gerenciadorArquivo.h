@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class gerenciadorArquivo{
+class GerenciadorArquivo{
     public:
 
     vector<Aluno> lerCSV(string caminho);

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-vector<Aluno> gerenciadorArquivo::lerCSV(string caminho){
+vector<Aluno> GerenciadorArquivo::lerCSV(string caminho){
     ifstream arquivo(caminho);
     vector<Aluno> listaAlunos;
 
@@ -66,7 +66,7 @@ vector<Aluno> gerenciadorArquivo::lerCSV(string caminho){
     return listaAlunos;
 }
 
-bool gerenciadorArquivo::salvarFixo(string arq, vector<Aluno> al){
+bool GerenciadorArquivo::salvarFixo(string arq, vector<Aluno> al){
     ofstream arqFixo(arq, ios::out | ios::binary);
     if(!arqFixo.is_open()){
         return false;
@@ -83,7 +83,7 @@ bool gerenciadorArquivo::salvarFixo(string arq, vector<Aluno> al){
     return true;
 }
 
-bool gerenciadorArquivo::salvarDelimitado(string arq, vector<Aluno> al){
+bool GerenciadorArquivo::salvarDelimitado(string arq, vector<Aluno> al){
     ofstream arqDelimitado(arq, ios::out | ios::binary);
     if(!arqDelimitado.is_open()){
         return false;
@@ -97,7 +97,7 @@ bool gerenciadorArquivo::salvarDelimitado(string arq, vector<Aluno> al){
     return true;
 }
 
-bool gerenciadorArquivo::salvarIndicador(string arq, vector<Aluno> al){
+bool GerenciadorArquivo::salvarIndicador(string arq, vector<Aluno> al){
     ofstream arqIndicador(arq, ios::out | ios::binary);
     if(!arqIndicador.is_open()){
         return false;
@@ -115,7 +115,7 @@ bool gerenciadorArquivo::salvarIndicador(string arq, vector<Aluno> al){
     return true;
 }
 
-bool gerenciadorArquivo::lerPorRRN(string arq, int rrn, Aluno& out){
+bool GerenciadorArquivo::lerPorRRN(string arq, int rrn, Aluno& out){
     if(rrn < 0)
         return false;
 
@@ -137,7 +137,9 @@ bool gerenciadorArquivo::lerPorRRN(string arq, int rrn, Aluno& out){
     arquivo.close();
 
     return true;
-vector<Aluno> lerFixo(string arq){
+}
+
+vector<Aluno> GerenciadorArquivo::lerFixo(string arq){
     vector<Aluno> listaAlunos;
     ifstream arqFixo(arq, ios::in | ios::binary);
     if(!arqFixo.is_open()){
@@ -156,7 +158,7 @@ vector<Aluno> lerFixo(string arq){
     return listaAlunos;
 }
 
-vector<Aluno> lerDelimitado(string arq){
+vector<Aluno> GerenciadorArquivo::lerDelimitado(string arq){
     vector<Aluno> listaAlunos;
     ifstream arqDelimitado(arq);
     if(!arqDelimitado.is_open()){
@@ -175,7 +177,7 @@ vector<Aluno> lerDelimitado(string arq){
     return listaAlunos;
 }
 
-vector<Aluno> lerIndicador(string arq){
+vector<Aluno> GerenciadorArquivo::lerIndicador(string arq){
     vector<Aluno> listaAlunos;
     ifstream arqIndicador(arq, ios::in | ios::binary);
     if(!arqIndicador.is_open()){

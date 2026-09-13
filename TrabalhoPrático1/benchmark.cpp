@@ -8,6 +8,7 @@
 #include "gerenciadorArquivo.h"
 #include "aluno.h"
 
+
 using namespace std;
 
 void Benchmark::executar(string caminhoCSV){
@@ -90,6 +91,8 @@ void Benchmark::executar(string caminhoCSV){
 
     this -> imprimirTabelaRelatorio(resultadosDaRodada);
 }
+
+using namespace std;
 
 void Benchmark::medirAcessoDiretoVsSequencial(string base, int N){
     long long tempoFixo = 0;

@@ -91,7 +91,7 @@ bool GerenciadorArquivo::salvarDelimitado(string arq, vector<Aluno> al){
 
     for(Aluno& aluno : al){
        string alunoAtual = aluno.packDelimitado();
-       arqDelimitado << alunoAtual; 
+       arqDelimitado << alunoAtual << "\n"; 
     }
     arqDelimitado.close();
     return true;
@@ -183,7 +183,7 @@ vector<Aluno> GerenciadorArquivo::lerIndicador(string arq){
     if(!arqIndicador.is_open()){
         return listaAlunos;
     }
-    int tamanhoRegistro;
+    unsigned short tamanhoRegistro;
     const int tamanhoMaximo = 512;
     char buffer[tamanhoMaximo];
     while(arqIndicador.read(reinterpret_cast<char*>(&tamanhoRegistro), sizeof(int))){

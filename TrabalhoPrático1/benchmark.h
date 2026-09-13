@@ -19,7 +19,6 @@ class Benchmark{
 public:
     void executar(string caminhoCSV);
     void medirAcessoDiretoVsSequencial(string base, int N);
-    void imprimirTabelaRelatorio(vector<Benchmark> res);
     void imprimirTabelaRelatorio(vector<Metricas> res);
 };
 

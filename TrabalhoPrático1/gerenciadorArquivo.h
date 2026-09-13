@@ -13,9 +13,6 @@ class GerenciadorArquivo{
     static bool salvarFixo(string arq, vector<Aluno> al);
     static bool salvarDelimitado(string arq, vector<Aluno> al);
     static bool salvarIndicador(string arq, vector<Aluno> al);
-    vector<Aluno> lerFixo(string arq);
-    vector<Aluno> lerDelimitado(string arq);
-    vector<Aluno> lerIndicador(string arq);
     static vector<Aluno> lerFixo(string arq);
     static vector<Aluno> lerDelimitado(string arq);
     static vector<Aluno> lerIndicador(string arq);

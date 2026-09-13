@@ -34,9 +34,9 @@ void Benchmark::executar(string caminhoCSV){
         bytesUteisTotais += a.getBytesUteis();
     }
 
-    string arqFixo = "alunos_fixo.bin";
-    string arqDelimitado = "alunos_delimitado.bin";
-    string arqIndicador = "alunos_indicador.bin";
+    string arqFixo = "_fixo.bin";
+    string arqDelimitado = "_delimitado.bin";
+    string arqIndicador = "_indicador.bin";
 
     GerenciadorArquivo::salvarFixo(arqFixo, alunos);
     GerenciadorArquivo::salvarDelimitado(arqDelimitado, alunos);
@@ -91,8 +91,6 @@ void Benchmark::executar(string caminhoCSV){
 
     this -> imprimirTabelaRelatorio(resultadosDaRodada);
 }
-
-using namespace std;
 
 void Benchmark::medirAcessoDiretoVsSequencial(string base, int N){
     long long tempoFixo = 0;

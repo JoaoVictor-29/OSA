@@ -6,6 +6,8 @@
 #include <iomanip>
 #include "benchmark.h"
 #include "gerenciadorArquivo.h"
+#include "aluno.h"
+
 
 using namespace std;
 
@@ -48,7 +50,6 @@ void Benchmark::executar(string caminhoCSV){
     vector<Aluno> lidosDelimitado = GerenciadorArquivo::lerDelimitado(arqDelimitado);
     fim = clock::now();
 }
-#include "aluno.h"
 
 using namespace std;
 

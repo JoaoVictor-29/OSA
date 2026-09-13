@@ -138,7 +138,6 @@ bool GerenciadorArquivo::lerPorRRN(string arq, int rrn, Aluno& out){
 
     return true;
 }
-vector<Aluno> lerFixo(string arq){
 
 vector<Aluno> GerenciadorArquivo::lerFixo(string arq){
     vector<Aluno> listaAlunos;

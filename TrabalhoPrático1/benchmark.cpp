@@ -6,6 +6,7 @@
 #include <iomanip>
 #include "benchmark.h"
 #include "gerenciadorArquivo.h"
+#include "aluno.h"
 
 using namespace std;
 
@@ -15,42 +16,80 @@ void Benchmark::executar(string caminhoCSV){
         cout << "Erro: Arquivo CSV vazio ou não enconrado! \n";
         return;
     }
-    Metricas met;
-    met.quantidadeRegistros = alunos.size();
+
+    string volumeStr = to_string(alunos.size()) + "reg";
+    if(alunos.size() == 1000){
+        volumeStr = "1.000 reg";
+    }else if(alunos.size() == 10000){
+        volumeStr = "10.000 reg";
+    }else if(alunos.size() == 50000){
+        volumeStr = "50.000 reg";
+    }else if(alunos.size() == 100000){
+        volumeStr = "100.000 reg";
+    }
+
+    double bytesUteisTotais = 0;
+    for(Aluno& a : alunos){
+        bytesUteisTotais += a.getBytesUteis();
+    }
+
     string arqFixo = "alunos_fixo.bin";
     string arqDelimitado = "alunos_delimitado.bin";
     string arqIndicador = "alunos_indicador.bin";
+
+    GerenciadorArquivo::salvarFixo(arqFixo, alunos);
+    GerenciadorArquivo::salvarDelimitado(arqDelimitado, alunos);
+    GerenciadorArquivo::salvarIndicador(arqIndicador, alunos);
 
     using clock = chrono::high_resolution_clock;
     using ms = chrono::duration<double, milli>;
 
     auto inicio = clock::now();
-    GerenciadorArquivo::salvarFixo(arqFixo, alunos);
-    auto fim = clock::now();
-    met.tempoEscritaFixo = ms(fim - inicio).count();
-
-    inicio =clock::now();
-    GerenciadorArquivo::salvarDelimitado(arqDelimitado, alunos);
-    fim = clock::now();
-    met.tempoEscritaDelimitado = ms(fim - inicio).count();
-
-    inicio = clock::now();
-    GerenciadorArquivo::salvarDelimitado(arqIndicador, alunos);
-    fim = clock::now();
-    met.tempoEscritaIndicador = ms(fim - inicio).count();
-
-    inicio = clock::now();
     vector<Aluno> lidosFixo = GerenciadorArquivo::lerFixo(arqFixo);
-    fim = clock::now();
-    met.tempoLeituraFixo = ms(fim - inicio).count();
+    auto fim = clock::now();
+    double tempoFixo = ms(fim - inicio).count();
 
     inicio = clock::now();
     vector<Aluno> lidosDelimitado = GerenciadorArquivo::lerDelimitado(arqDelimitado);
     fim = clock::now();
-}
-#include "aluno.h"
+    double tempoDelimitado = ms(fim - inicio).count();
 
-using namespace std;
+    inicio = clock::now();
+    vector<Aluno> lidosIndicador = GerenciadorArquivo::lerIndicador(arqIndicador);
+    fim = clock::now();
+    double tempoIndicador = ms(fim - inicio).count();
+
+    vector<Metricas> resultadosDaRodada;
+
+    Metricas metFixo;
+    metFixo.formato = "Formato 1: Fixo Total";
+    metFixo.volume = volumeStr;
+    metFixo.bytesUteis = bytesUteisTotais;
+    metFixo.tamanhoDisco = GerenciadorArquivo::obterTamanhoArquivo(arqFixo);
+    metFixo.eficiencia = (metFixo.bytesUteis / metFixo.tamanhoDisco)*100.0;
+    metFixo.tempoLeitura = tempoFixo;
+    resultadosDaRodada.push_back(metFixo);
+
+    Metricas metDelimitado;
+    metDelimitado.formato = "Formato 2: Delimitado";
+    metDelimitado.volume = volumeStr;
+    metDelimitado.bytesUteis = bytesUteisTotais;
+    metDelimitado.tamanhoDisco = GerenciadorArquivo::obterTamanhoArquivo(arqDelimitado);
+    metDelimitado.eficiencia = (metDelimitado.bytesUteis / metDelimitado.tamanhoDisco)*100.0;
+    metDelimitado.tempoLeitura = tempoDelimitado;
+    resultadosDaRodada.push_back(metDelimitado);
+
+    Metricas metIndicador;
+    metIndicador.formato = "Formato 3: Indicador";
+    metIndicador.volume = volumeStr;
+    metIndicador.bytesUteis = bytesUteisTotais;
+    metIndicador.tamanhoDisco = GerenciadorArquivo::obterTamanhoArquivo(arqIndicador);
+    metIndicador.eficiencia = (metIndicador.bytesUteis / metIndicador.tamanhoDisco)*100.0;
+    metIndicador.tempoLeitura = tempoIndicador;
+    resultadosDaRodada.push_back(metIndicador);
+
+    this -> imprimirTabelaRelatorio(resultadosDaRodada);
+}
 
 void Benchmark::medirAcessoDiretoVsSequencial(string base, int N){
     long long tempoFixo = 0;

@@ -2,22 +2,22 @@
 #define GERENCIADORARQUIVO_H
 #include <vector>
 #include <string>
-#include "Aluno.h"
+#include "aluno.h"
 
 using namespace std;
 
 class GerenciadorArquivo{
     public:
 
-    vector<Aluno> lerCSV(string caminho);
-    bool salvarFixo(string arq, vector<Aluno> al);
-    bool salvarDelimitado(string arq, vector<Aluno> al);
-    bool salvarIndicador(string arq, vector<Aluno> al);
-    vector<Aluno> lerFixo(string arq);
-    vector<Aluno> lerDelimitado(string arq);
-    vector<Aluno> lerIndicador(string arq);
+    static vector<Aluno> lerCSV(string caminho);
+    static bool salvarFixo(string arq, vector<Aluno> al);
+    static bool salvarDelimitado(string arq, vector<Aluno> al);
+    static bool salvarIndicador(string arq, vector<Aluno> al);
+    static vector<Aluno> lerFixo(string arq);
+    static vector<Aluno> lerDelimitado(string arq);
+    static vector<Aluno> lerIndicador(string arq);
     static bool lerPorRRN(string arq, int rrn, Aluno& out);
-    long long obterTamanhoArquivo(string arq);
+    static long long obterTamanhoArquivo(string arq);
 };
 
 #endif

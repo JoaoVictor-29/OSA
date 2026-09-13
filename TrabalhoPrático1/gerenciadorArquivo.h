@@ -16,7 +16,7 @@ class GerenciadorArquivo{
     vector<Aluno> lerFixo(string arq);
     vector<Aluno> lerDelimitado(string arq);
     vector<Aluno> lerIndicador(string arq);
-    bool lerPorRRN(string arq, int rrn, Aluno& out);
+    static bool lerPorRRN(string arq, int rrn, Aluno& out);
     long long obterTamanhoArquivo(string arq);
 };
 
